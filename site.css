@@ -1,45 +1,82 @@
-.picture{
-  border-radius: 8px;
-}
-
-.name {
-  font-family: monospace;
-}
-
-.biobox {
-  font-family: monospace;
-  font-size: 1em;
-
-  border-style: double;
-  border-width: 8px;
-  width: 600px;
+.name_container{
+  background-color: white;
+  width: 344px;
   padding: 10px 10px 10px 10px;
+
+  font-family: monospace;
+  font-size: 2.5em;
+}
+
+.content_container{
+  background-color: white;
+  max-width: 768px;
+}
+
+.img_container{
+  background-color: white;
+  height: 364px;
+  width: 335px;
+  margin: 5px 10px 5px 10px;
+  float: left;
+  overflow: hidden;
+
+  border-radius: 5px;
+  border-style: double;
+  border-width: 5px;
   border-color: black;
 
   outline-style: solid;
   outline-color: #7c0c18;
-  outline-width: 6px;
+  outline-width: 5px;
+}
+
+.bio_container{
+  background-color: white;
+  height: 354px;
+  width: 340px;
+  float: left;
+  padding: 5px 5px 5px 5px;
+  margin: 5px 10px 5px 10px;
+
+  font-size: 1em;
+  text-align: left;
+  font-family: monospace;
+
+  border-style: double;
+  border-width: 5px;
+  border-color: black;
+
+  outline-style: solid;
+  outline-color: #7c0c18;
+  outline-width: 5px;
+}
+
+.news_container{
+  background-color: white;
+  width: 344px;
+  padding: 10px 10px 10px 10px;
 }
 
 .newstitle{
-  font-family: monospace;
-  color: white;
   background-color: #be172e;
-  width: 600px;
   padding: 20px 10px 20px 10px;
   margin-bottom: 20px;
+
+  color: white;
+  font-family: monospace;
   text-align: center;
 }
 
 .newsite{
-  font-family: monospace;
-  color: white;
   background-color: #ee4c56;
   padding: 20px 10px 20px 10px;
   margin-bottom: 20px;
   margin-right: 10px;
-  text-align: center;
   float: left;
+
+  font-family: monospace;
+  color: white;
+  text-align: center;
 }
 
 .clear{
