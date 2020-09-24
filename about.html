@@ -1,9 +1,58 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <script>
+          window.onload = function() {
+            // functions that run after page loads
+            displayGreeting();
+            fetchWeatherTucson ();
+            fetchWeatherKansasCity ();
+          }
+          // display good morning, afternoon or evening based on the time
+          function displayGreeting() {
+            var date = new Date();
+            var hour = date.getHours();
+            var description = "";
+            if (hour < 12) {
+              description = "morning";
+            } else if (hour < 17) {
+              description = "afternoon";
+            } else {
+              description = "evening";
+            }
+            document.getElementById("greeting").innerHTML = "Good " + description;
+          }
+          // get weather data from openweathermap and display the current temp
+          function fetchWeatherTucson() {
+            fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
+            .then(function(resp) { return resp.json() })
+            .then(function(data) {
+              document.getElementById("weatherTucson").innerHTML = "It is currently " + data.main.temp + " &#8457 in Tucson, AZ.";
+            })
+            .catch(function() {
+              document.getElementById("weatherTucson").innerHTML = "Error in fetchWeather function";
+            });
+          }
+
+          // get weather data from openweathermap and display the current temp
+          function fetchWeatherKansasCity() {
+            fetch("https://api.openweathermap.org/data/2.5/weather?zip=66209,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
+            .then(function(resp) { return resp.json() })
+            .then(function(data) {
+              document.getElementById("weatherKansasCity").innerHTML = "It is currently " + data.main.temp + " &#8457 in Kansas City, KS.";
+            })
+            .catch(function() {
+              document.getElementById("weatherKansasCity").innerHTML = "Error in fetchWeather function";
+            });
+          }
+
+        </script>
+
     <link rel="stylesheet" href="site.css">
     <title>About Me</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   </head>
   <body>
     <center>
@@ -43,6 +92,10 @@
        </div>
 
        <div class="clear"></div>
+
+       <div id="greeting"></div>
+       <div id="weatherTucson"></div>
+        <div id="weatherKansasCity"></div>
 
     </center>
   </body>
