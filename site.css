@@ -68,9 +68,9 @@
 
 .newsite{
   background-color: #ee4c56;
-  padding: 20px 10px 20px 10px;
+  padding: 20px 5px 20px 5px;
   margin-bottom: 20px;
-  margin-right: 10px;
+  margin-right: 5px;
   float: left;
 
   font-family: monospace;
@@ -135,6 +135,10 @@
   border-color: black;
   padding: 5px 5px 5px 5px;
   margin: 5px 5px 5px 5px;
+
+  outline-style: solid;
+  outline-color: #7c0c18;
+  outline-width: 3px;
 }
 
 .rss_title {

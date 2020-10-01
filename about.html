@@ -10,7 +10,7 @@
     <script>
           window.onload = function() {
             // functions that run after page loads
-            displayGreeting();
+            displayGreeting ();
             fetchWeatherTucson ();
             fetchWeatherKansasCity ();
             displayRSSFeed ();
@@ -18,7 +18,7 @@
 
           function displayRSSFeed() {
         // fetch an RSS feed and display the title and description
-        var origURL = 'https://www.buzzfeed.com/wtf.xml';
+        var origURL = 'http://www.cell.com/cell/current.rss';
         // feednami doesn't like & so replace with %26
         var replacedURL = origURL.replace(/&/g, "%26");
         feednami.load(replacedURL,function(result) {
@@ -96,30 +96,37 @@
         <div class="clear"></div>
       </div>
 
+      <div id="greeting"></div>
+      <div id="weatherTucson"></div>
+      <div id="weatherKansasCity"></div>
+
+      <div class="clear"></div>
+
       <div class="news_container">
 
          <div class="newstitle"><h3>News Sites</h3></div>
-
-         <div class="newsite"><a href="https://www.espn.com" target="_blank"> ESPN </a></div>
-
-         <div class="newsite"><a href="https://www.nytimes.com" target="_blank"> NYTimes </a></div>
 
          <div class="newsite"><a href="https://tucson.com" target="_blank"> Arizona Daily Star </a></div>
 
          <div class="newsite"><a href="https://www.kansascity.com" target="_blank"> The Kansas City Star </a></div>
 
+         <div class="newsite"><a href="https://www.espn.com" target="_blank"> ESPN </a></div>
+
+         <div class="newsite"><a href="https://www.nytimes.com" target="_blank"> NYTimes </a></div>
+
          <div class="newsite"><a href="https://www.npr.org" target="_blank"> NPR </a></div>
 
          <div class="newsite"><a href="https://time.com" target="_blank"> Time Magazine </a></div>
+
+         <div class="clear"></div>
+
+         <div class="newsite"><a href="https://www.cell.com/cell/home" target="_blank"> Cell </a></div>
 
        </div>
 
        <div class="clear"></div>
 
-       <div id="greeting"></div>
-       <div id="weatherTucson"></div>
-       <div id="weatherKansasCity"></div>
-       <div id="rss_item"></div>
+       <div id="rss_items"></div>
 
     </center>
   </body>
