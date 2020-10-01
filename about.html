@@ -14,26 +14,8 @@
             fetchWeatherTucson ();
             fetchWeatherKansasCity ();
             displayRSSFeed ();
+            listSheet ();
           }
-
-          function displayRSSFeed() {
-        // fetch an RSS feed and display the title and description
-        var origURL = 'http://www.cell.com/cell/current.rss';
-        // feednami doesn't like & so replace with %26
-        var replacedURL = origURL.replace(/&/g, "%26");
-        feednami.load(replacedURL,function(result) {
-          if (result.error) {
-            console.log(result.error);
-          } else {
-            var entries = result.feed.entries
-            for (var i = 0; i < entries.length; i++) {
-              var entry = entries[i];
-              let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
-              document.getElementById("rss_items").innerHTML += divElement;
-            }
-          }
-        });
-      }
 
           // display good morning, afternoon or evening based on the time
           function displayGreeting() {
@@ -74,7 +56,49 @@
             });
           }
 
-        </script>
+          function displayRSSFeed() {
+        // fetch an RSS feed and display the title and description
+        var origURL = 'http://www.cell.com/cell/current.rss';
+        // feednami doesn't like & so replace with %26
+        var replacedURL = origURL.replace(/&/g, "%26");
+        feednami.load(replacedURL,function(result) {
+          if (result.error) {
+            console.log(result.error);
+          } else {
+            var entries = result.feed.entries
+            for (var i = 0; i < entries.length; i++) {
+              var entry = entries[i];
+              let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
+              document.getElementById("rss_items").innerHTML += divElement;
+            }
+          }
+        });
+      }
+
+      function listSheet() {
+        // list google sheet rows
+        fetch('https://api.sheetson.com/v2/sheets/locations', {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer Mi9iusmGr2i7AmEGfZGEsIUHLwKqP0jaDFcvxegVZbayLTE__akf_BcmykxtjQ',
+            'X-Sheetson-Spreadsheet-Id': '1TUVIXaaj7oXNsPa3Syw-xOKnjuT3HkqRXjYjEDvoNqo'
+          }
+        })
+        .then(function(resp) { return resp.json() })
+        .then(function(data) {
+          for (var i = 0; i < data.results.length; i++) {
+            var result = data.results[i];
+            let divElement = '<div class="cell">' + '<div class="cell_name">' + result.name + '</div>' + '<div class="cell_address">' + result.address + '</div>' + '<div class="cell_url"><a href="' + result.url + '">' + result.url + '</a></div>' + '<div class="cell_phone">' + result.phone + '</div>' + '</div>';
+            document.getElementById("sheet").innerHTML += divElement;
+          }
+        })
+        .catch(function() {
+          document.getElementById("sheet").innerHTML = "Error in listSheet function";
+        });
+      }
+
+    </script>
 
   </head>
   <body>
@@ -110,13 +134,13 @@
 
          <div class="newsite"><a href="https://www.kansascity.com" target="_blank"> The Kansas City Star </a></div>
 
-         <div class="newsite"><a href="https://www.espn.com" target="_blank"> ESPN </a></div>
+         <div class="newsite"><a href="https://time.com" target="_blank"> TIME </a></div>
 
-         <div class="newsite"><a href="https://www.nytimes.com" target="_blank"> NYTimes </a></div>
+         <div class="newsite"><a href="https://www.nationalgeographic.com/magazine/" target="_blank"> National Geographic </a></div>
 
-         <div class="newsite"><a href="https://www.npr.org" target="_blank"> NPR </a></div>
+         <div class="newsite"><a href="https://www.nature.com" target="_blank"> Nature </a></div>
 
-         <div class="newsite"><a href="https://time.com" target="_blank"> Time Magazine </a></div>
+         <div class="newsite"><a href="https://science.sciencemag.org" target="_blank"> Science Magazine</a></div>
 
          <div class="clear"></div>
 
@@ -126,7 +150,13 @@
 
        <div class="clear"></div>
 
+       <div class="rsstitle"><h3>Cell Articles:</h3></div>
+
        <div id="rss_items"></div>
+
+       <div class="sheettitle"><h3>COVID-19 Testing Locations:</h3></div>
+
+       <div id="sheet"></div>
 
     </center>
   </body>
