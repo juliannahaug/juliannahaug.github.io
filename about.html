@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="site.css">
+    <title>About Me</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
 
     <script>
           window.onload = function() {
@@ -8,7 +13,28 @@
             displayGreeting();
             fetchWeatherTucson ();
             fetchWeatherKansasCity ();
+            displayRSSFeed ();
           }
+
+          function displayRSSFeed() {
+        // fetch an RSS feed and display the title and description
+        var origURL = 'https://www.buzzfeed.com/wtf.xml';
+        // feednami doesn't like & so replace with %26
+        var replacedURL = origURL.replace(/&/g, "%26");
+        feednami.load(replacedURL,function(result) {
+          if (result.error) {
+            console.log(result.error);
+          } else {
+            var entries = result.feed.entries
+            for (var i = 0; i < entries.length; i++) {
+              var entry = entries[i];
+              let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
+              document.getElementById("rss_items").innerHTML += divElement;
+            }
+          }
+        });
+      }
+
           // display good morning, afternoon or evening based on the time
           function displayGreeting() {
             var date = new Date();
@@ -23,6 +49,7 @@
             }
             document.getElementById("greeting").innerHTML = "Good " + description;
           }
+
           // get weather data from openweathermap and display the current temp
           function fetchWeatherTucson() {
             fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
@@ -48,10 +75,6 @@
           }
 
         </script>
-
-    <link rel="stylesheet" href="site.css">
-    <title>About Me</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   </head>
   <body>
@@ -95,7 +118,8 @@
 
        <div id="greeting"></div>
        <div id="weatherTucson"></div>
-        <div id="weatherKansasCity"></div>
+       <div id="weatherKansasCity"></div>
+       <div id="rss_item"></div>
 
     </center>
   </body>

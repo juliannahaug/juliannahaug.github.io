@@ -129,6 +129,24 @@
   outline-width: 3px;
 }
 
+#rss_items {
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+  padding: 5px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
+}
+
+.rss_title {
+  font-size: 1.2em;
+  font-family: monospace;
+}
+
+.rss_description {
+  padding-top: 5px;
+  padding-bottom: 20px;
+}
+
 .clear{
   clear: left;
 }
