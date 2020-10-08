@@ -139,6 +139,14 @@
   padding-bottom: 20px;
 }
 
+#mapid {
+  height: 400px;
+  width: 700px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+}
+
 #sheet {
   width: 768px;
   padding: 5px 5px 5px 5px;

@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="site.css">
     <title>About Me</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="site.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
     <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
 
     <script>
-          window.onload = function() {
+      window.onload = function() {
             // functions that run after page loads
-            displayGreeting ();
-            fetchWeatherTucson ();
-            fetchWeatherKansasCity ();
-            displayRSSFeed ();
-            listSheet ();
+            displayGreeting();
+            fetchWeatherTucson();
+            fetchWeatherKansasCity();
+            displayRSSFeed();
+            var mymap = drawMap();
+            listSheet(mymap);
           }
 
           // display good morning, afternoon or evening based on the time
-          function displayGreeting() {
+        function displayGreeting() {
             var date = new Date();
             var hour = date.getHours();
             var description = "";
@@ -33,7 +38,7 @@
           }
 
           // get weather data from openweathermap and display the current temp
-          function fetchWeatherTucson() {
+        function fetchWeatherTucson() {
             fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
             .then(function(resp) { return resp.json() })
             .then(function(data) {
@@ -45,7 +50,7 @@
           }
 
           // get weather data from openweathermap and display the current temp
-          function fetchWeatherKansasCity() {
+        function fetchWeatherKansasCity() {
             fetch("https://api.openweathermap.org/data/2.5/weather?zip=66209,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
             .then(function(resp) { return resp.json() })
             .then(function(data) {
@@ -56,47 +61,67 @@
             });
           }
 
-          function displayRSSFeed() {
-        // fetch an RSS feed and display the title and description
-        var origURL = 'http://www.cell.com/cell/current.rss';
-        // feednami doesn't like & so replace with %26
-        var replacedURL = origURL.replace(/&/g, "%26");
-        feednami.load(replacedURL,function(result) {
-          if (result.error) {
-            console.log(result.error);
-          } else {
-            var entries = result.feed.entries
-            for (var i = 0; i < entries.length; i++) {
-              var entry = entries[i];
-              let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
-              document.getElementById("rss_items").innerHTML += divElement;
+        function displayRSSFeed() {
+          // fetch an RSS feed and display the title and description
+          var origURL = 'http://www.cell.com/cell/current.rss';
+          // feednami doesn't like & so replace with %26
+          var replacedURL = origURL.replace(/&/g, "%26");
+          feednami.load(replacedURL,function(result) {
+            if (result.error) {
+              console.log(result.error);
+            } else {
+              var entries = result.feed.entries
+              for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i];
+                let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
+                document.getElementById("rss_items").innerHTML += divElement;
+              }
             }
-          }
-        });
-      }
+          });
+        }
 
-      function listSheet() {
-        // list google sheet rows
-        fetch('https://api.sheetson.com/v2/sheets/locations', {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer Mi9iusmGr2i7AmEGfZGEsIUHLwKqP0jaDFcvxegVZbayLTE__akf_BcmykxtjQ',
-            'X-Sheetson-Spreadsheet-Id': '1TUVIXaaj7oXNsPa3Syw-xOKnjuT3HkqRXjYjEDvoNqo'
-          }
-        })
-        .then(function(resp) { return resp.json() })
-        .then(function(data) {
-          for (var i = 0; i < data.results.length; i++) {
-            var result = data.results[i];
-            let divElement = '<div class="cell">' + '<div class="cell_name">' + result.name + '</div>' + '<div class="cell_address">' + result.address + '</div>' + '<div class="cell_url"><a href="' + result.url + '">' + result.url + '</a></div>' + '<div class="cell_phone">' + result.phone + '</div>' + '</div>';
-            document.getElementById("sheet").innerHTML += divElement;
-          }
-        })
-        .catch(function() {
-          document.getElementById("sheet").innerHTML = "Error in listSheet function";
-        });
-      }
+        function drawMap() {
+          var mymap = L.map('mapid').setView([32.231900, -110.953610], 11.4);
+          L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1Ijoiam9oYXVnIiwiYSI6ImNrZnk2Znk2bDAxNzEyeG1yZ3JtY211ZTIifQ.NzEbs6T4-ZLfhyO5zUaq4g'
+          }).addTo(mymap);
+          return mymap;
+        }
+
+        function addPin(mymap, lat, lon, name) {
+          // add a pin to mymap at lat, lon with a popup
+          L.marker([lat, lon]).addTo(mymap).bindPopup(name);
+        }
+
+        function listSheet(mymap) {
+          // list google sheet rows
+          fetch('https://api.sheetson.com/v2/sheets/locations?no-cache=true', {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer Mi9iusmGr2i7AmEGfZGEsIUHLwKqP0jaDFcvxegVZbayLTE__akf_BcmykxtjQ',
+              'X-Sheetson-Spreadsheet-Id': '1TUVIXaaj7oXNsPa3Syw-xOKnjuT3HkqRXjYjEDvoNqo'
+            }
+          })
+          .then(function(resp) { return resp.json() })
+          .then(function(data) {
+            for (var i = 0; i < data.results.length; i++) {
+              var result = data.results[i];
+              let divElement = '<div class="cell">' + '<div class="cell_name">' + result.name + '</div>' + '<div class="cell_address">' + result.address + '</div>' + '<div class="cell_url"><a href="' + result.url + '">' + result.url + '</a></div>' + '<div class="cell_phone">' + result.phone + '</div>' + '</div>';
+              document.getElementById("sheet").innerHTML += divElement;
+
+              addPin(mymap, result.lat, result.lon, '<strong>' + result.name + '</strong><br>' + result.address);
+            }
+          })
+          .catch(function() {
+            document.getElementById("sheet").innerHTML = "Error in listSheet function";
+          });
+        }
 
     </script>
 
@@ -153,6 +178,8 @@
        <div class="rsstitle"><h3>Cell Articles:</h3></div>
 
        <div id="rss_items"></div>
+
+       <div id="mapid"></div>
 
        <div class="sheettitle"><h3>COVID-19 Testing Locations:</h3></div>
 
