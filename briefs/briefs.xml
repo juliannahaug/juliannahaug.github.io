@@ -7,22 +7,21 @@
   <description>Alexa Flash Briefs</description>
 
   <item>
-    <pubDate>Sat, 24 Oct 2020 09:00:00 -0700</pubDate>
+    <pubDate>Thu, 12 Nov 2020 011:00:00 -0700</pubDate>
     <title>I Look Like My Mother Project: Praise</title>
     <link>https://juliannahaug.github.io/about.html</link>
     <description>Praise article</description>
-    <enclosure url="https://juliannahaug.github.io/briefs/Praise.m4a" type="audio/mpeg" length="452324"></enclosure>
-    <guid isPermaLink="false">https://juliannahaug.github.io/briefs/Praise.m4a</guid>
+    <enclosure url="https://juliannahaug.github.io/briefs/Praise.mp3" type="audio/mpeg" length="52324"></enclosure>
+    <guid isPermaLink="false">https://juliannahaug.github.io/briefs/Praise.mp3</guid>
   </item>
 
   <item>
-    <pubDate>Sat, 24 Oct 2020 09:00:00 -0700</pubDate>
+    <pubDate>Thu, 12 Nov 2020 011:00:00 -0700</pubDate>
     <title>I Look Like My Mother Project: Alexandra</title>
     <link>https://juliannahaug.github.io/about.html</link>
     <description>Alexandra article</description>
-    <enclosure url="https://juliannahaug.github.io/briefs/Alexandra.m4a" type="audio/mpeg" length="371769"></enclosure>
-    <guid isPermaLink="false">https://juliannahaug.github.io/briefs/Alexandra.m4a</guid>
+    <enclosure url="https://juliannahaug.github.io/briefs/Alexandra.mp3" type="audio/mpeg" length="371769"></enclosure>
+    <guid isPermaLink="false">https://juliannahaug.github.io/briefs/Alexandra.mp3</guid>
   </item>
 </channel>
 </rss>
- 
