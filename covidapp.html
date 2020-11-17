@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Covid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="site.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <script src="https://storage.googleapis.com/feednami-static/js/feednami-client-v1.0.1.js"></script>
+
+    <script>
+      window.onload = function() {
+            // functions that run after page loads
+            displayGreeting();
+            fetchWeatherTucson();
+            fetchWeatherKansasCity();
+            displayRSSFeed();
+            var mymap = drawMap();
+            listSheet(mymap);
+          }
+
+          // display good morning, afternoon or evening based on the time
+        function displayGreeting() {
+            var date = new Date();
+            var hour = date.getHours();
+            var description = "";
+            if (hour < 12) {
+              description = "morning";
+            } else if (hour < 17) {
+              description = "afternoon";
+            } else {
+              description = "evening";
+            }
+            document.getElementById("greeting").innerHTML = "Good " + description;
+          }
+
+          // get weather data from openweathermap and display the current temp
+        function fetchWeatherTucson() {
+            fetch("https://api.openweathermap.org/data/2.5/weather?zip=85719,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
+            .then(function(resp) { return resp.json() })
+            .then(function(data) {
+              document.getElementById("weatherTucson").innerHTML = "It is currently " + data.main.temp + " &#8457 in Tucson, AZ.";
+            })
+            .catch(function() {
+              document.getElementById("weatherTucson").innerHTML = "Error in fetchWeather function";
+            });
+          }
+
+          // get weather data from openweathermap and display the current temp
+        function fetchWeatherKansasCity() {
+            fetch("https://api.openweathermap.org/data/2.5/weather?zip=66209,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
+            .then(function(resp) { return resp.json() })
+            .then(function(data) {
+              document.getElementById("weatherKansasCity").innerHTML = "It is currently " + data.main.temp + " &#8457 in Kansas City, KS.";
+            })
+            .catch(function() {
+              document.getElementById("weatherKansasCity").innerHTML = "Error in fetchWeather function";
+            });
+          }
+
+        function displayRSSFeed() {
+          // fetch an RSS feed and display the title and description
+          var origURL = 'https://tools.cdc.gov/podcasts/feed.asp?feedid=183';
+          // feednami doesn't like & so replace with %26
+          var replacedURL = origURL.replace(/&/g, "%26");
+          feednami.load(replacedURL,function(result) {
+            if (result.error) {
+              console.log(result.error);
+            } else {
+              var entries = result.feed.entries
+              for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i];
+                let divElement = '<div class="rss_title"><a href="' + entry.link + '" target="_blank">' + entry.title + '</a></div><div class="rss_description">' + entry.description + '</div>';
+                document.getElementById("rss_items").innerHTML += divElement;
+              }
+            }
+          });
+        }
+
+        function drawMap() {
+          var mymap = L.map('mapid').setView([32.231900, -110.953610], 11.4);
+          L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1Ijoiam9oYXVnIiwiYSI6ImNrZnk2Znk2bDAxNzEyeG1yZ3JtY211ZTIifQ.NzEbs6T4-ZLfhyO5zUaq4g'
+          }).addTo(mymap);
+          return mymap;
+        }
+
+        function addPin(mymap, lat, lon, name) {
+          // add a pin to mymap at lat, lon with a popup
+          L.marker([lat, lon]).addTo(mymap).bindPopup(name);
+        }
+
+        function listSheet(mymap) {
+          // list google sheet rows
+          fetch('https://api.sheetson.com/v2/sheets/locations?no-cache=true', {
+            withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer Mi9iusmGr2i7AmEGfZGEsIUHLwKqP0jaDFcvxegVZbayLTE__akf_BcmykxtjQ',
+              'X-Sheetson-Spreadsheet-Id': '1TUVIXaaj7oXNsPa3Syw-xOKnjuT3HkqRXjYjEDvoNqo'
+            }
+          })
+          .then(function(resp) { return resp.json() })
+          .then(function(data) {
+            for (var i = 0; i < data.results.length; i++) {
+              var result = data.results[i];
+              let divElement = '<div class="cell">' + '<div class="cell_name">' + result.name + '</div>' + '<div class="cell_address">' + result.address + '</div>' + '<div class="cell_url"><a href="' + result.url + '">' + result.url + '</a></div>' + '<div class="cell_phone">' + result.phone + '</div>' + '</div>';
+              document.getElementById("sheet").innerHTML += divElement;
+
+              addPin(mymap, result.lat, result.lon, '<strong>' + result.name + '</strong><br>' + result.address);
+            }
+          })
+          .catch(function() {
+            document.getElementById("sheet").innerHTML = "Error in listSheet function";
+          });
+        }
+
+    </script>
+
+  </head>
+  <body>
+    <center>
+
+      <div class="name_container">Julianna, Lauren, Johnny, Abdulwahab</div>
+
+      <div class="content_container">
+
+        <div class="img_container">
+          <img src="media/covid.jpg" height="400" width="335">
+        </div>
+
+        <div class="bio_container">
+          <h3>My Bio</h3>
+          This Google Voice App can help you determine if you're at high risk of exposure to COVID-19. It will also give you tips on how to prevent the spread of COVID-19!
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+      <div id="greeting"></div>
+      <div id="weatherTucson"></div>
+      <div id="weatherKansasCity"></div>
+
+      <div class="clear"></div>
+
+      <div class="news_container">
+
+         <div class="newstitle"><h3>News Updates</h3></div>
+
+         <div class="newsite"><a href="https://tucson.com/news/local/updates-tucson-area-coronavirus-developments-nov-12-what-we-know/article_dc8e92ea-6561-11ea-9e87-17207f678ee6.html" target="_blank">Tucson-Area Coronavirus Developments</a></div>
+
+         <div class="newsite"><a href="https://webcms.pima.gov/cms/One.aspx?portalId=169&pageId=575060" target="_blank">Pima County COVID-19 Testing Locations</a></div>
+
+       </div>
+
+       <div class="clear"></div>
+
+       <div class="rsstitle"><h3>CDC Online Newsroom</h3></div>
+
+       <div id="rss_items"></div>
+
+       <div id="mapid"></div>
+
+       <div class="sheettitle"><h3>COVID-19 Testing Locations:</h3></div>
+
+       <div id="sheet"></div>
+
+    </center>
+  </body>
+</html>
