@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Covid</title>
+    <title>Covid-19 Google Voice App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="site.css">
 
@@ -16,7 +16,6 @@
             // functions that run after page loads
             displayGreeting();
             fetchWeatherTucson();
-            fetchWeatherKansasCity();
             displayRSSFeed();
             var mymap = drawMap();
             listSheet(mymap);
@@ -46,18 +45,6 @@
             })
             .catch(function() {
               document.getElementById("weatherTucson").innerHTML = "Error in fetchWeather function";
-            });
-          }
-
-          // get weather data from openweathermap and display the current temp
-        function fetchWeatherKansasCity() {
-            fetch("https://api.openweathermap.org/data/2.5/weather?zip=66209,US&appid=6def18c9244353a31b07fb6dad207ed1&units=imperial")
-            .then(function(resp) { return resp.json() })
-            .then(function(data) {
-              document.getElementById("weatherKansasCity").innerHTML = "It is currently " + data.main.temp + " &#8457 in Kansas City, KS.";
-            })
-            .catch(function() {
-              document.getElementById("weatherKansasCity").innerHTML = "Error in fetchWeather function";
             });
           }
 
@@ -129,49 +116,46 @@
   <body>
     <center>
 
-      <div class="name_container">Julianna, Lauren, Johnny, Abdulwahab</div>
+      <div class="header_container">
 
-      <div class="content_container">
+        <div class="name_container">COVID-19 Google Voice App</div>
 
-        <div class="img_container">
-          <img src="media/covid.jpg" height="400" width="335">
-        </div>
-
-        <div class="bio_container">
-          <h3>My Bio</h3>
-          This Google Voice App can help you determine if you're at high risk of exposure to COVID-19. It will also give you tips on how to prevent the spread of COVID-19!
+        <div class="greeting_container">
+          <div id="greeting"></div>
+          <div id="weatherTucson"></div>
         </div>
 
         <div class="clear"></div>
       </div>
 
-      <div id="greeting"></div>
-      <div id="weatherTucson"></div>
-      <div id="weatherKansasCity"></div>
+      <div class="content_container">
 
-      <div class="clear"></div>
+        <div class="img_container">
+          <img src="media/covid.jpg" height="200" width="200">
+        </div>
 
-      <div class="news_container">
+        <div class="bio_container">
+          <h3>What can this app do?</h3>
+          This COVID-19 Google Voice App is a one stop experience for individuals who need digital resources for COVID-19. This COVID-19 Google Voice App can help you determine if you're at risk of exposure to COVID-19, give you tips on how to prevent the spread of COVID-19, and more!
+        </div>
 
-         <div class="newstitle"><h3>News Updates</h3></div>
+        <div class="clear"></div>
+      </div>
 
-         <div class="newsite"><a href="https://tucson.com/news/local/updates-tucson-area-coronavirus-developments-nov-12-what-we-know/article_dc8e92ea-6561-11ea-9e87-17207f678ee6.html" target="_blank">Tucson-Area Coronavirus Developments</a></div>
+      <div class="sheettitle"><h3>COVID-19 Testing Locations:</h3></div>
 
-         <div class="newsite"><a href="https://webcms.pima.gov/cms/One.aspx?portalId=169&pageId=575060" target="_blank">Pima County COVID-19 Testing Locations</a></div>
+      <div class="map_container">
 
-       </div>
+        <div id="mapid"></div>
 
-       <div class="clear"></div>
+        <div id="sheet"></div>
+
+        <div class="clear"></div>
+      </div>
 
        <div class="rsstitle"><h3>CDC Online Newsroom</h3></div>
 
        <div id="rss_items"></div>
-
-       <div id="mapid"></div>
-
-       <div class="sheettitle"><h3>COVID-19 Testing Locations:</h3></div>
-
-       <div id="sheet"></div>
 
     </center>
   </body>

@@ -1,9 +1,46 @@
+.header_container{
+  background-color: white;
+  max-width: 768px;
+}
+
 .name_container{
   font-family: monospace;
-  font-size: 2.5em;
+  font-size: 2em;
+  background-color: #fcc37b;
+  width: 364px;
+  padding: 10px 10px 10px 10px;
+  float: left;
+}
+
+.greeting_container{
   background-color: white;
-  width: 344px;
-  padding: 20px 20px 20px 20px;
+  width: 364px;
+  padding: 10px 10px 10px 10px;
+  float: left;
+}
+
+#greeting {
+  font-size: 1em;
+  font-family: monospace;
+  background-color: #fcc37b;
+  width: 357px;
+  padding: 1px 1px 1px 1px;
+  margin: 1px 1px 1px 1px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #999999;
+  }
+
+#weatherTucson {
+  font-size: 1em;
+  font-family: monospace;
+  background-color: #fcc37b;
+  width: 357px;
+  padding: 1px 1px 1px 1px;
+  margin: 1px 1px 1px 1px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #999999;
 }
 
 .content_container{
@@ -13,8 +50,9 @@
 
 .img_container{
   background-color: white;
-  height: 374px;
-  width: 335px;
+  height: 200px;
+  width: 356px;
+  padding: 5px 5px 5px 5px;
   margin: 5px 8px 5px 8px;
   float: left;
   overflow: hidden;
@@ -22,7 +60,7 @@
   border-width: 3px;
   border-color: black;
   outline-style: solid;
-  outline-color: #ee4c56;
+  outline-color: #fcc37b;
   outline-width: 3px;
 }
 
@@ -31,8 +69,8 @@
   text-align: left;
   font-family: monospace;
   background-color: white;
-  height: 364px;
-  width: 335px;
+  height: 200px;
+  width: 346px;
   padding: 5px 5px 5px 5px;
   margin: 5px 8px 5px 8px;
   float: left;
@@ -40,90 +78,75 @@
   border-width: 3px;
   border-color: black;
   outline-style: solid;
-  outline-color: #ee4c56;
+  outline-color: #fcc37b;
   outline-width: 3px;
 }
 
-#greeting {
-  font-size: 1.2em;
-  font-family: monospace;
+.map_container{
   background-color: white;
-  width: 335px;
-  padding: 3px 3px 3px 3px;
-  margin: 0.5em;
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
-  outline-style: solid;
-  outline-color: #7c0c18;
-  outline-width: 3px;
-  }
-
-#weatherTucson {
-  font-size: 1.2em;
-  font-family: monospace;
-  background-color: white;
-  width: 550px;
-  padding: 3px 3px 3px 3px;
-  margin: 0.5em;
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
-  outline-style: solid;
-  outline-color: #7c0c18;
-  outline-width: 3px;
+  max-width: 768px;
 }
 
-#weatherKansasCity {
-  font-size: 1.2em;
-  font-family: monospace;
-  background-color: white;
-  width: 550px;
-  padding: 3px 3px 3px 3px;
-  margin: 0.5em;
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
-  outline-style: solid;
-  outline-color: #7c0c18;
-  outline-width: 3px;
-}
-
-.news_container{
-  background-color: white;
-  width: 344px;
-  padding: 10px 10px 10px 10px;
-}
-
-.newstitle{
-  color: white;
-  font-family: monospace;
-  text-align: center;
-  background-color: #be172e;
-  padding: 20px 10px 20px 10px;
-  margin-bottom: 20px;
-}
-
-.newsite{
-  font-family: monospace;
-  color: white;
-  text-align: center;
-  background-color: #ee4c56;
-  padding: 20px 5px 20px 5px;
-  margin-bottom: 20px;
-  margin-right: 5px;
+#mapid {
+  height: 400px;
+  width: 378px;
   float: left;
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+}
+
+#sheet {
+  width: 378px;
+  height: 400px;
+  overflow: scroll;
+  float: left;
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+}
+
+.cell {
+  padding: 5px 5px 5px 5px;
+  margin: 5px 5px 5px 5px;
+  border-width: 3px;
+  border-color: black;
+  outline-style: solid;
+  outline-color: #fcc37b;
+  outline-width: 3px;
+}
+
+.cell_name {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+.cell_address {
+  font-family: monospace;
+  font-size: .9em;
+}
+
+.cell_url {
+  font-family: monospace;
+  font-size: .9em;
+}
+
+.cell_phone {
+  font-family: monospace;
+  font-size: .9em;
 }
 
 #rss_items {
   width: 768px;
+  height: 200px;
   padding: 5px 5px 5px 5px;
   margin: 5px 5px 15px 5px;
+  overflow: scroll;
   border-style: solid;
   border-width: 3px;
   border-color: black;
   outline-style: solid;
-  outline-color: #7c0c18;
+  outline-color: #fcc37b;
   outline-width: 3px;
 }
 
@@ -137,56 +160,6 @@
   font-size: 1em;
   padding-top: 5px;
   padding-bottom: 20px;
-}
-
-#mapid {
-  height: 400px;
-  width: 700px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
-}
-
-#sheet {
-  width: 768px;
-  padding: 5px 5px 5px 5px;
-  margin: 5px 5px 5px 5px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: black;
-  outline-style: solid;
-  outline-color: #7c0c18;
-  outline-width: 3px;
-}
-
-.cell {
-  padding: 5px 5px 5px 5px;
-  margin: 5px 5px 5px 5px;
-  border-width: 3px;
-  border-color: black;
-  outline-style: solid;
-  outline-color: #7c0c18;
-  outline-width: 3px;
-}
-
-.cell_name {
-  font-family: monospace;
-  font-size: 1.2em;
-}
-
-.cell_address {
-  font-family: monospace;
-  font-size: 1em;
-}
-
-.cell_url {
-  font-family: monospace;
-  font-size: 1em;
-}
-
-.cell_phone {
-  font-family: monospace;
-  font-size: 1em;
 }
 
 .clear{
